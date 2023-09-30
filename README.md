@@ -1,4 +1,8 @@
 # Erupe Community Edition
+
+This fork is based on SU9.1 beta, and has diva prayer gems enabled and diva skill exchange rate modified.
+To set prayer gems, make sure to run  `patch-schema\!DB_setup.bat` use `!song` and `!effect` commands in game chat (for details, see `server\channelserver\handlers_cast_binary.go`) and activate at the quest counter (blue girl) after reloading land.
+
 ## Setup
 - If you are only looking to install Erupe, please use [a pre-compiled binary](https://github.com/ZeruLight/Erupe/releases/latest).
 - If you want to modify or compile Erupe yourself please read on.

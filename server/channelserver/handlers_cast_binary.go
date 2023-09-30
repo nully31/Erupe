@@ -243,13 +243,13 @@ func handleMsgSysCastBinary(s *Session, p mhfpacket.MHFPacket) {
 			var e1, e2, e3, e4 uint8
 			n, err := fmt.Sscanf(chatMessage.Message, "!effect %d %d %d %d", &e1, &e2, &e3, &e4)
 			if err != nil || n != 4 {
-				sendServerChatMessage(s, "コマンドが無効です。使用例：!effect num1 num2 num3 num4")
+				sendServerChatMessage(s, "Invalid command. Usage: !effect num1 num2 num3 num4")
 			} else if 7 < e1+e2+e3+e4 {
-				sendServerChatMessage(s, "レベルの合計値は7以下になるように入力してください。")
+				sendServerChatMessage(s, "Enter levels where the total value of the levels to be less than or equal to 7.")
 			} else {
 				_, err = s.server.db.Exec("UPDATE demo_color SET color_1 = $1, color_2 = $2, color_3 = $3, color_4 = $4 WHERE char_id = $5", e1, e2, e3, e4, s.charID)
 				if err == nil {
-					sendServerChatMessage(s, fmt.Sprintf("祈珠のレベルを以下の値で設定しました：赤 %d 黄 %d 緑 %d 青 %d", e1, e2, e3, e4))
+					sendServerChatMessage(s, fmt.Sprintf("Prayer gem levels have been set successfully; red %d yellow %d green %d blue %d", e1, e2, e3, e4))
 				}
 			}
 		}
@@ -258,13 +258,13 @@ func handleMsgSysCastBinary(s *Session, p mhfpacket.MHFPacket) {
 			var s1, s2, s3, s4 uint8
 			n, err := fmt.Sscanf(chatMessage.Message, "!song %d %d %d %d", &s1, &s2, &s3, &s4)
 			if err != nil || n != 4 {
-				sendServerChatMessage(s, "コマンドが無効です。使用例：!song num1 num2 num3 num4")
+				sendServerChatMessage(s, "Invalid command. Usage: !song num1 num2 num3 num4")
 			} else if 25 < s1 || 25 < s2 || 25 < s3 || 25 < s4 {
-				sendServerChatMessage(s, "祈珠スキルIDは1-25の値で設定してください。")
+				sendServerChatMessage(s, "Prayer gem skill ID must be set with a value between 1 and 25.")
 			} else {
 				_, err = s.server.db.Exec("UPDATE demo_select_kiju SET effect1 = $1, effect2 = $2, effect3 = $3, effect4 = $4 WHERE char_id = $5", s1, s2, s3, s4, s.charID)
 				if err == nil {
-					sendServerChatMessage(s, fmt.Sprintf("祈珠スキルを以下のIDで設定しました：赤 %d 黄 %d 緑 %d 青 %d", s1, s2, s3, s4))
+					sendServerChatMessage(s, fmt.Sprintf("Prayer gem skills have been set successfully; red %d yellow %d green %d blue %d", s1, s2, s3, s4))
 				}
 			}
 		}
