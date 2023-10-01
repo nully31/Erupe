@@ -243,7 +243,7 @@ func handleMsgSysCastBinary(s *Session, p mhfpacket.MHFPacket) {
 			var e1, e2, e3, e4 uint8
 			n, err := fmt.Sscanf(chatMessage.Message, "!effect %d %d %d %d", &e1, &e2, &e3, &e4)
 			if err != nil || n != 4 {
-				sendServerChatMessage(s, "Invalid command. Usage: !effect num1 num2 num3 num4")
+				sendServerChatMessage(s, "Invalid command. Usage: !effect level_of_red level_of_yellow level_of_green level_of_blue")
 			} else if 7 < e1+e2+e3+e4 {
 				sendServerChatMessage(s, "Enter levels where the total value of the levels to be less than or equal to 7.")
 			} else {
@@ -258,7 +258,7 @@ func handleMsgSysCastBinary(s *Session, p mhfpacket.MHFPacket) {
 			var s1, s2, s3, s4 uint8
 			n, err := fmt.Sscanf(chatMessage.Message, "!song %d %d %d %d", &s1, &s2, &s3, &s4)
 			if err != nil || n != 4 {
-				sendServerChatMessage(s, "Invalid command. Usage: !song num1 num2 num3 num4")
+				sendServerChatMessage(s, "Invalid command. Usage: !song gem1 gem2 gem3 gem4")
 			} else if 25 < s1 || 25 < s2 || 25 < s3 || 25 < s4 {
 				sendServerChatMessage(s, "Prayer gem skill ID must be set with a value between 1 and 25.")
 			} else {

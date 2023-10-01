@@ -64,27 +64,38 @@ func handleMsgMhfGetUdSchedule(s *Session, p mhfpacket.MHFPacket) {
 	pkt := p.(*mhfpacket.MsgMhfGetUdSchedule)
 	bf := byteframe.NewByteFrame()
 
-	id, start := uint32(0xCAFEBEEF), uint32(0)
-	rows, _ := s.server.db.Queryx("SELECT id, (EXTRACT(epoch FROM start_time)::int) as start_time FROM events WHERE event_type='diva'")
-	for rows.Next() {
-		rows.Scan(&id, &start)
-	}
-
-	var timestamps []uint32
-	if s.server.erupeConfig.DevMode && s.server.erupeConfig.DevModeOptions.DivaEvent >= 0 {
-		if s.server.erupeConfig.DevModeOptions.DivaEvent == 0 {
-			doAckBufSucceed(s, pkt.AckHandle, make([]byte, 36))
-			return
+	/*
+		id, start := uint32(0xCAFEBEEF), uint32(0)
+		rows, _ := s.server.db.Queryx("SELECT id, (EXTRACT(epoch FROM start_time)::int) as start_time FROM events WHERE event_type='diva'")
+		for rows.Next() {
+			rows.Scan(&id, &start)
 		}
-		timestamps = generateDivaTimestamps(s, uint32(s.server.erupeConfig.DevModeOptions.DivaEvent), true)
-	} else {
-		timestamps = generateDivaTimestamps(s, start, false)
-	}
 
-	bf.WriteUint32(id)
-	for _, timestamp := range timestamps {
-		bf.WriteUint32(timestamp)
-	}
+		var timestamps []uint32
+		if s.server.erupeConfig.DevMode && s.server.erupeConfig.DevModeOptions.DivaEvent >= 0 {
+			if s.server.erupeConfig.DevModeOptions.DivaEvent == 0 {
+				doAckBufSucceed(s, pkt.AckHandle, make([]byte, 36))
+				return
+			}
+			timestamps = generateDivaTimestamps(s, uint32(s.server.erupeConfig.DevModeOptions.DivaEvent), true)
+		} else {
+			timestamps = generateDivaTimestamps(s, start, false)
+		}
+
+		bf.WriteUint32(id)
+		for _, timestamp := range timestamps {
+			bf.WriteUint32(timestamp)
+		}
+	*/
+
+	midnight := Time_Current_Midnight()
+	bf.WriteUint32(0x1d5fda5c)                                        // Unk (1d5fda5c, 0b5397df)
+	bf.WriteUint32(uint32(midnight.Add(-24 * 21 * time.Hour).Unix())) // Week 1 Timestamp, Festi start?
+	bf.WriteUint32(uint32(midnight.Add(-24 * 14 * time.Hour).Unix())) // Week 2 Timestamp
+	bf.WriteUint32(uint32(midnight.Add(-24 * 14 * time.Hour).Unix())) // Week 2 Timestamp
+	bf.WriteUint32(uint32(midnight.Add(24 * 7 * time.Hour).Unix()))   // Diva Defense Interception
+	bf.WriteUint32(uint32(midnight.Add(-24 * 7 * time.Hour).Unix()))  // Diva Defense Interception
+	bf.WriteUint32(uint32(midnight.Add(24 * 14 * time.Hour).Unix()))  // Diva Defense Greeting Song
 
 	bf.WriteUint16(0x19) // Unk 00011001
 	bf.WriteUint16(0x2D) // Unk 00101101

@@ -16,6 +16,7 @@ import (
 	ps "erupe-ce/common/pascalstring"
 	"erupe-ce/common/stringsupport"
 	"erupe-ce/network/mhfpacket"
+
 	"github.com/jmoiron/sqlx"
 	"go.uber.org/zap"
 )
@@ -946,7 +947,7 @@ func handleMsgMhfInfoGuild(s *Session, p mhfpacket.MHFPacket) {
 		bf.WriteBytes(guildLeaderName)
 		bf.WriteBytes([]byte{0x00, 0x00, 0x00, 0x00}) // Unk
 		bf.WriteBool(false)                           // isReturnGuild
-		bf.WriteBool(false)                           // earnedSpecialHall
+		bf.WriteBool(true)                            // earnedSpecialHall
 		bf.WriteBytes([]byte{0x02, 0x02})             // Unk
 		bf.WriteUint32(guild.EventRP)
 		ps.Uint8(bf, guild.PugiName1, true)
