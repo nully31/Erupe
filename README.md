@@ -1,6 +1,6 @@
 # Erupe Community Edition
 
-This fork is based on SU9.1 beta, and has diva prayer gems enabled and diva skill exchange rate modified.
+This fork is based on SU9.1 beta, and has diva prayer gems/diva defense special guild hall enabled, and diva skill exchange rate modified.
 To set prayer gems, make sure to run  `patch-schema\!DB_setup.bat` use `!song` and `!effect` commands in game chat (for details, see `server\channelserver\handlers_cast_binary.go`) and activate at the quest counter (blue girl) after reloading your land.
 
 ## Setup
