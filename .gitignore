@@ -11,3 +11,4 @@ savedata/*/
 *.lnk
 erupe-ce*
 old_version/
+config.json
