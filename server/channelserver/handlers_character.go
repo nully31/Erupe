@@ -6,6 +6,7 @@ import (
 
 	"erupe-ce/network/mhfpacket"
 	"erupe-ce/server/channelserver/compression/nullcomp"
+
 	"go.uber.org/zap"
 )
 
@@ -72,6 +73,13 @@ func GetCharacterSaveData(s *Session, charID uint32) (*CharacterSaveData, error)
 func (save *CharacterSaveData) Save(s *Session, transaction *sql.Tx) error {
 	// We need to update the save data byte array before we save it back to the DB
 	save.updateSaveDataWithStruct()
+
+	// Disable update for secret tech flag
+	for i := range save.baseSaveData {
+		if 145508 <= i && i < 145512 {
+			save.baseSaveData[i] = 0x0
+		}
+	}
 
 	compressedData, err := save.CompressedBaseData(s)
 
