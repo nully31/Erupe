@@ -6,9 +6,11 @@ bin/*.bak
 bin/quests/*.bin
 bin/scenarios/*.bin
 bin/debug/*.bin
+bin/questlists*
 savedata/*/
 *.exe
 *.lnk
 erupe-ce*
 old_version/
 config.json
+log.txt
