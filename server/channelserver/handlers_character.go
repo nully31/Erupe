@@ -11,7 +11,8 @@ import (
 )
 
 const (
-	CharacterSaveRPPointer = 0x22D16
+	CharacterSaveRPPointer    = 0x22D16
+	CharacterSaveSTechPointer = 0x23864
 )
 
 type CharacterSaveData struct {
@@ -74,12 +75,7 @@ func (save *CharacterSaveData) Save(s *Session, transaction *sql.Tx) error {
 	// We need to update the save data byte array before we save it back to the DB
 	save.updateSaveDataWithStruct()
 
-	// Disable update for secret tech flag
-	for i := range save.baseSaveData {
-		if 145508 <= i && i < 145512 {
-			save.baseSaveData[i] = 0x0
-		}
-	}
+	disableSecretTechFlagUpdate(save.baseSaveData)
 
 	compressedData, err := save.CompressedBaseData(s)
 
@@ -137,4 +133,14 @@ func (save *CharacterSaveData) updateStructWithSaveData() {
 func handleMsgMhfSexChanger(s *Session, p mhfpacket.MHFPacket) {
 	pkt := p.(*mhfpacket.MsgMhfSexChanger)
 	doAckSimpleSucceed(s, pkt.AckHandle, []byte{0x00, 0x00, 0x00, 0x00})
+}
+
+// Disable Secret Tech update flag
+func disableSecretTechFlagUpdate(save []byte) {
+	if len(save) < CharacterSaveSTechPointer {
+		return
+	}
+	stBytes := make([]byte, 4)
+	binary.LittleEndian.PutUint32(stBytes, 0)
+	copy(save[CharacterSaveSTechPointer:CharacterSaveSTechPointer+4], stBytes)
 }

@@ -13,9 +13,10 @@ import (
 
 	"erupe-ce/common/byteframe"
 	"erupe-ce/network/mhfpacket"
-	"go.uber.org/zap"
 	"math/bits"
 	"math/rand"
+
+	"go.uber.org/zap"
 )
 
 // Temporary function to just return no results for a MSG_MHF_ENUMERATE* packet
@@ -1562,7 +1563,11 @@ func handleMsgMhfGetEarthStatus(s *Session, p mhfpacket.MHFPacket) {
 	doAckSimpleSucceed(s, pkt.AckHandle, []byte{0x00, 0x00, 0x00, 0x00})
 }
 
-func handleMsgMhfRegistSpabiTime(s *Session, p mhfpacket.MHFPacket) {}
+func handleMsgMhfRegistSpabiTime(s *Session, p mhfpacket.MHFPacket) {
+	pkt := p.(*mhfpacket.MsgMhfRegistSpabiTime)
+	// Doesn't really do anything for now
+	doAckBufSucceed(s, pkt.AckHandle, make([]byte, 4))
+}
 
 func handleMsgMhfGetEarthValue(s *Session, p mhfpacket.MHFPacket) {
 	pkt := p.(*mhfpacket.MsgMhfGetEarthValue)

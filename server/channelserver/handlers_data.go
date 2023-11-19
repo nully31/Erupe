@@ -15,6 +15,7 @@ import (
 	"erupe-ce/network/mhfpacket"
 	"erupe-ce/server/channelserver/compression/deltacomp"
 	"erupe-ce/server/channelserver/compression/nullcomp"
+
 	"go.uber.org/zap"
 )
 
@@ -34,6 +35,8 @@ func handleMsgMhfSavedata(s *Session, p mhfpacket.MHFPacket) {
 		if err != nil {
 			s.logger.Fatal("Failed to decompress diff", zap.Error(err))
 		}
+		// Disable Secret Tech update flag (doesn't seem necessary but just in case)
+		disableSecretTechFlagUpdate(diff)
 		// Perform diff.
 		s.logger.Info("Diffing...")
 		characterSaveData.SetBaseSaveData(deltacomp.ApplyDataDiff(diff, characterSaveData.BaseSaveData()))
@@ -43,6 +46,8 @@ func handleMsgMhfSavedata(s *Session, p mhfpacket.MHFPacket) {
 		if err != nil {
 			s.logger.Fatal("Failed to decompress savedata from packet", zap.Error(err))
 		}
+		// Disable Secret Tech update flag (doesn't seem necessary but just in case)
+		disableSecretTechFlagUpdate(saveData)
 		s.logger.Info("Updating save with blob")
 		characterSaveData.SetBaseSaveData(saveData)
 	}

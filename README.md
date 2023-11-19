@@ -1,7 +1,16 @@
 # Erupe Community Edition
 
-This fork is based on SU9.1 beta, and has diva prayer gems/diva defense special guild hall enabled, and also have diva skill exchange rate modified.
-To configure prayer gems, use `!song` and `!effect` commands in game chat (for details, take a look at and [`Kiju_list.csv`](./schema/Kiju_list.csv) and [`handlers_cast_binary.go`](./server/channelserver/handlers_cast_binary.go) ) and activate normally at the quest counter (blue girl, you may have to change your land to see the changes).
+This build is based on SU9.1 beta, and it has a bunch of features activated mainly for speedrunning.
+
+The main changes are:
+
+* You can activate prayer gems with desired effects and levels almost permanently.
+    * To configure prayer gems, use `!song` and `!effect` commands in game chat.
+    * For command details, take a look at and [`Kiju_list.csv`](./schema/Kiju_list.csv) and [`handlers_cast_binary.go`](./server/channelserver/handlers_cast_binary.go) .
+    * After configuration, you may activate the gems by talking to the blue girl at the quest counter (you may have to change lobby to get the effects applied).
+* Diva defense special guild hall is enabled.
+* The exchange rate and the limit of GCP diva skills are modified (each item now only costs 1GCP, and lets you stack up to 255 instead of 10).
+* Secret Tech usage no longer is saved in the database, though you still need to switch lobby to have it reset.
 
 > ⚠️ **WARNING!!!**: 
 I would strongly recommend to set up a whole new separate database for this build (see [Setup](#setup) below).
