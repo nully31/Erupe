@@ -3,7 +3,7 @@ color a
 cd /d %~dp0
 
 echo Please set pgAdmin path or database settings accordingly in this batch file if you want to customize configurations.
-:: Change the postgre installation path accordingly
+:: Change the postgre path accordingly
 set PGPATH=C:\"Program Files"\PostgreSQL\14\bin\
 set HOSTNAME=localhost
 set PORTNUM=5432
