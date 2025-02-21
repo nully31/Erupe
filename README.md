@@ -24,7 +24,7 @@ I would strongly recommend to set up a whole new separate database for this buil
     - If you already have a database named `erupe` for another build, edit the batch file to make the new database with a different name.
     - You may also have to edit your PostgreSQL path in the batch file in case you have another version than 14 installed.
 2. Edit [config.json](./config.json) and enter the postgres password `"database" : { "password" : "<here>" }`.
-2. Run `go build` or `go run .` to compile Erupe.
+2. Run `go build` or `go run .` to compile Erupe, or you can just download the compiled binary from the Release page on this repository and run it.
 ### Note
 - You will need to acquire and install the client files and quest binaries separately.
 # Resources
