@@ -18,12 +18,12 @@ I would strongly recommend to set up a whole new separate database for this buil
 ## Setup
 ### Requirements
 - [Go](https://go.dev/dl/)
-- [PostgreSQL](https://www.postgresql.org/download/)
+- [PostgreSQL](https://www.postgresql.org/download/) (default setup uses 14)
 ### Installation
 1. Run [`schema\!DB-setup.bat`](./schema/!DB-setup.bat) to set up a new database.
     - If you already have a database named `erupe` for another build, edit the batch file to make the new database with a different name.
-    - You may also have to edit your PostgreSQL path in the batch file in case you have other versions than 14 installed.
-2. Edit [config.json](./config.json) such that the database password matches your PostgreSQL setup.
+    - You may also have to edit your PostgreSQL path in the batch file in case you have another version than 14 installed.
+2. Edit [config.json](./config.json) and enter the postgres password `"database" : { "password" : "<here>" }`.
 2. Run `go build` or `go run .` to compile Erupe.
 ### Note
 - You will need to acquire and install the client files and quest binaries separately.
